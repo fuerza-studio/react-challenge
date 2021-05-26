@@ -41,7 +41,7 @@ API can be launched using npm start. You will need to run npm install once you s
 | -------------------- | --------------------------- |
 | /auth/login          | Login                       |
 | /auth/signup         | Sign up                     |
-| /journal/entries/:id | List all journals from user |
+| /journals/entries/:id | List all journals from user |
 
 ---
 
@@ -50,11 +50,11 @@ API can be launched using npm start. You will need to run npm install once you s
 - post => '/auth/login', user.login'
 - post => '/auth/signup', user.signup'
 
-- get => '/journal/entries/:id', journal.getEntries'
-- get => '/journal/:id', journal.getJournal'
+- get => '/journals/entries/:id', journal.getEntries'
+- get => '/journals/:id', journal.getJournal'
 
-- post => '/journal/', journal.create' _title : String_
-- post => '/journal/entry/:id', journal.addEntry' _{content,title} : Object_
+- post => '/journals/', journal.create' _title : String_
+- post => '/journals/entry/:id', journal.addEntry' _{content,title} : Object_
 
-- put => '/journal/entry/:id', journal.updateEntry' _{content,title} : Object_
-- put => '/journal/:id', journal.updateJournal' _title : String_
+- put => '/journals/entry/:id', journal.updateEntry' _{content,title} : Object_
+- put => '/journals/:id', journal.updateJournal' _title : String_
