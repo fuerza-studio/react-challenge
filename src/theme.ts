@@ -1,4 +1,6 @@
+import { LinkProps } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
+import { LinkBehavior } from './components/Link';
 
 const theme = createTheme({
   palette: {
@@ -15,6 +17,13 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: ['Montserrat', 'Abhaya Libre'].join(','),
+  },
+  components: {
+    MuiLink: {
+      defaultProps: {
+        component: LinkBehavior,
+      } as LinkProps,
+    },
   },
 });
 
