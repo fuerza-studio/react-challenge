@@ -1,7 +1,14 @@
-import React from "react"
+import React from 'react';
+import { ThemeProvider } from '@mui/material';
 
-function App(){
-    return <h1>Fuerza Test</h1>
-}
+import theme from './theme';
 
-export default App
+const App = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <h1>Fuerza Test</h1>
+    </ThemeProvider>
+  );
+};
+
+export default App;
