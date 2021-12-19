@@ -8,6 +8,7 @@ import { OutlinedInputProps } from '@mui/material/OutlinedInput';
 
 const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
   ({ theme, hiddenLabel }) => ({
+    minWidth: '100%',
     '& .MuiFormLabel-root': {
       fontSize: 12,
       fontWeight: 600,
