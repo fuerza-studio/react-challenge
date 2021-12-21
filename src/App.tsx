@@ -10,17 +10,18 @@ import { ToastContainer } from 'react-toastify';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 
+import PrivateRoute from './PrivateRoute';
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
 import NoMatch from './routes/NoMatch';
-
-import theme from './theme';
-
-import ScreenBgImg from './assets/screen-bg-img.png';
 import JournalsHome from './routes/Journals/JournalsHome';
 import AddJournal from './routes/Journals/AddJournal';
 import PostsHome from './routes/Posts/PostsHome';
 import AddPost from './routes/Posts/AddPost';
+
+import theme from './theme';
+
+import ScreenBgImg from './assets/screen-bg-img.png';
 
 const Background = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -39,14 +40,26 @@ const App = () => {
         <Box sx={{ padding: '42px 30px' }}>
           <Routes>
             <Route path="journals">
-              <Route path="" element={<JournalsHome />} />
-              <Route path="create" element={<AddJournal />} />
+              <Route
+                path=""
+                element={<PrivateRoute component={JournalsHome} />}
+              />
+              <Route
+                path="create"
+                element={<PrivateRoute component={AddJournal} />}
+              />
               <Route path=":journalId">
                 <Route index element={<Navigate to="posts" />} />
                 <Route path="posts">
-                  <Route index element={<PostsHome />} />
+                  <Route
+                    index
+                    element={<PrivateRoute component={PostsHome} />}
+                  />
                   <Route path=":postId">
-                    <Route path="create" element={<AddPost />} />
+                    <Route
+                      path="create"
+                      element={<PrivateRoute component={AddPost} />}
+                    />
                   </Route>
                 </Route>
               </Route>
