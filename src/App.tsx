@@ -6,7 +6,9 @@ import {
   styled,
   BoxProps,
 } from '@mui/material';
+import { ToastContainer } from 'react-toastify';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 import SignIn from './routes/SignIn';
 import SignUp from './routes/SignUp';
@@ -56,6 +58,7 @@ const App = () => {
           </Routes>
         </Box>
       </Background>
+      <ToastContainer />
     </ThemeProvider>
   );
 };
