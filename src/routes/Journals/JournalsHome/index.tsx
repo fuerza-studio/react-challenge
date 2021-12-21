@@ -74,7 +74,7 @@ const JournalsHome: React.FC = () => {
                 sm={4}
                 md={3}
                 key={index}
-                onClick={() => navigate(`/jornals/${item.id}/posts`)}
+                onClick={() => navigate(`/journals/${item.id}/posts`)}
               >
                 <JournalCard
                   content={item.content}

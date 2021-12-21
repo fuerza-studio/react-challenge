@@ -17,6 +17,8 @@ import theme from './theme';
 import ScreenBgImg from './assets/screen-bg-img.png';
 import JournalsHome from './routes/Journals/JournalsHome';
 import AddJournal from './routes/Journals/AddJournal';
+import PostsHome from './routes/Posts/PostsHome';
+import AddPost from './routes/Posts/AddPost';
 
 const Background = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -37,6 +39,15 @@ const App = () => {
             <Route path="journals">
               <Route path="" element={<JournalsHome />} />
               <Route path="create" element={<AddJournal />} />
+              <Route path=":journalId">
+                <Route index element={<Navigate to="posts" />} />
+                <Route path="posts">
+                  <Route index element={<PostsHome />} />
+                  <Route path=":postId">
+                    <Route path="create" element={<AddPost />} />
+                  </Route>
+                </Route>
+              </Route>
             </Route>
             <Route path="signin" element={<SignIn />} />
             <Route path="signup" element={<SignUp />} />
