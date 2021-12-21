@@ -31,7 +31,7 @@ const UserProvider: React.FC = (props) => {
         throw new Error();
       }
       localStorage.setItem('token', response.token);
-      setUser(response.user.email);
+      setUser(response.user.email || 'Not existing email');
       navigate('/journals');
     } catch (err) {
       toast.error('Wrong credentials!', {
