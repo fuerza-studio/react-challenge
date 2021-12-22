@@ -59,6 +59,12 @@ const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
           opacity: 1,
         },
       },
+      textarea: {
+        '&::placeholder': {
+          color: `${theme.palette.primary.dark} !important`,
+          opacity: 1,
+        },
+      },
       // fix white box on input when hiddenLabel is false
       ...(!hiddenLabel && {
         input: {
@@ -90,11 +96,12 @@ const TextField: React.FC<TextFieldProps> = ({
   hiddenLabel,
   hookFormError,
   maxLength,
+  rows,
   ...rest
 }) => (
   <Box
     sx={{
-      height: '55px',
+      height: rows ? '100%' : '55px',
       width: '100%',
       display: 'flex',
       flexDirection: 'column',
@@ -102,6 +109,7 @@ const TextField: React.FC<TextFieldProps> = ({
   >
     <StyledTextField
       {...(!hiddenLabel && { label })}
+      {...(rows && { rows })}
       {...(hiddenLabel && { hiddenLabel: true })}
       InputProps={
         {

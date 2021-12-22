@@ -98,15 +98,18 @@ const AddPost: React.FC = () => {
             control={control}
             placeholder="Title"
             hiddenLabel
+            maxLength={30}
             error={errors.title || null}
           />
         </Box>
-        <Box sx={{ width: '100%', maxWidth: '500px', marginBottom: '10px' }}>
+        <Box sx={{ width: '100%', maxWidth: '500px', marginBottom: '40px' }}>
           <FormField
             name="content"
             control={control}
             placeholder="Write your note"
             hiddenLabel
+            multiline
+            rows={20}
             error={errors.content || null}
           />
         </Box>
