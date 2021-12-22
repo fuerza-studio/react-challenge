@@ -1,17 +1,54 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
 import { Box, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+import api from '../../../services/api';
 import Button from '../../../components/Button';
-import TextField from '../../../components/TextField';
+import FormField from '../../../components/FormField';
 
 import Logo from '../../../assets/logo';
 
 const journalTitle = 'HTML';
 
+interface FormValues {
+  title: string;
+  content: string;
+}
+
 const AddPost: React.FC = () => {
   const navigate = useNavigate();
+  const { journalId } = useParams();
+  const {
+    control,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<FormValues>();
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await api.post(`/journals/entry/${journalId}`, data);
+
+      if (!response) {
+        throw new Error();
+      }
+
+      navigate(`/journals/${journalId}/posts`);
+    } catch (error) {
+      toast.error('Bad request', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  };
+
   return (
     <Box component="section">
       <Box
@@ -31,7 +68,7 @@ const AddPost: React.FC = () => {
           flexDirection: 'row',
           marginBottom: '45px',
         }}
-        onClick={() => navigate('/journals/123123/posts')}
+        onClick={() => navigate(`/journals/${journalId}/posts`)}
       >
         <ArrowBackIosIcon sx={{ marginRight: '20px' }} />
         <Typography>{journalTitle}</Typography>
@@ -51,13 +88,25 @@ const AddPost: React.FC = () => {
             marginBottom: '28px',
           }}
         >
-          <TextField placeholder="Title" hiddenLabel />
+          <FormField
+            name="title"
+            control={control}
+            placeholder="Title"
+            hiddenLabel
+          />
         </Box>
         <Box sx={{ width: '100%', maxWidth: '500px', marginBottom: '35px' }}>
-          <TextField placeholder="Write your note" hiddenLabel />
+          <FormField
+            name="content"
+            control={control}
+            placeholder="Write your note"
+            hiddenLabel
+          />
         </Box>
         <Box>
-          <Button variant="contained">Save note</Button>
+          <Button variant="contained" onClick={handleSubmit(onSubmit)}>
+            {isSubmitting ? 'Loading' : 'Save note'}
+          </Button>
         </Box>
       </Box>
     </Box>

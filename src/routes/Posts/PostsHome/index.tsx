@@ -1,29 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Add } from '@mui/icons-material';
-import { Box, Grid, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, Typography, Grid } from '@mui/material';
+import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+import api from '../../../services/api';
 import Button from '../../../components/Button';
 import Link from '../../../components/Link';
 import PostCard from '../../../components/PostCard';
 
 import Logo from '../../../assets/logo';
 import JournalsEmptyImg from '../../../assets/journals-empty-img';
+import { Entry } from '../../../interfaces/entry.interface';
 
 const PostsHome: React.FC = () => {
   const navigate = useNavigate();
-  const [posts] = useState([
-    { id: '1', content: 'Post 1' },
-    { id: '2', content: 'Post 2' },
-    { id: '3', content: 'Post 3' },
-    { id: '4', content: 'Post 4' },
-    { id: '5', content: 'Post 5' },
-    { id: '6', content: 'Post 6' },
-  ]);
+  const { journalId } = useParams();
 
-  const journalTitle = 'HTML';
+  const [journalTitle, setJournalTitle] = useState<string>('');
+  const [posts, setPosts] = useState<Entry[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const hasPosts = posts.length;
+
+  useEffect(() => {
+    if (journalId) {
+      const handleGetPosts = async () => {
+        try {
+          const {
+            entries,
+            journalTitle,
+          }: { entries: Entry[]; journalTitle: string } = await api.get(
+            `/journals/entries/${journalId}`
+          );
+
+          if (!Response) {
+            throw new Error();
+          }
+
+          setPosts(entries);
+          setJournalTitle(journalTitle);
+        } catch (err) {
+          toast.error(`Journal with ${journalId} id not found`, {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      handleGetPosts();
+    }
+  }, [journalId]);
+
+  if (isLoading) return <p>loading...</p>;
 
   return (
     <Box component="section">
@@ -57,7 +93,7 @@ const PostsHome: React.FC = () => {
           <Button
             variant="outlined"
             startIcon={<Add />}
-            onClick={() => navigate('/journals/123123/posts/23123/create')}
+            onClick={() => navigate(`/journals/${journalId}/posts/create`)}
           >
             Add Note
           </Button>
@@ -87,7 +123,7 @@ const PostsHome: React.FC = () => {
               <JournalsEmptyImg />
             </Box>
             <Box>
-              <Link href="/journals/123123/posts/23123/create">
+              <Link href={`/journals/${journalId}/posts/create`}>
                 Create a note
               </Link>
             </Box>
@@ -106,9 +142,11 @@ const PostsHome: React.FC = () => {
                 sm={4}
                 md={3}
                 key={index}
-                onClick={() => navigate(`/jornals/123/posts/${item.id}`)}
+                onClick={() =>
+                  navigate(`/jornals/${journalId}/posts/${item.id}`)
+                }
               >
-                <PostCard title={item.content} />
+                <PostCard title={item.title} />
               </Grid>
             ))}
           </Grid>

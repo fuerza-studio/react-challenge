@@ -55,12 +55,12 @@ const App = () => {
                     index
                     element={<PrivateRoute component={PostsHome} />}
                   />
-                  <Route path=":postId">
-                    <Route
-                      path="create"
-                      element={<PrivateRoute component={AddPost} />}
-                    />
-                  </Route>
+                  <Route
+                    path="create"
+                    element={<PrivateRoute component={AddPost} />}
+                  />
+                  {/* <Route path=":postId"> */}
+                  {/* </Route> */}
                 </Route>
               </Route>
             </Route>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Add } from '@mui/icons-material';
+import { toast } from 'react-toastify';
 import { Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,7 +12,6 @@ import JournalCard from '../../../components/JournalCard';
 
 import Logo from '../../../assets/logo';
 import JournalsEmptyImg from '../../../assets/journals-empty-img';
-import { toast } from 'react-toastify';
 import { Journal } from '../../../interfaces/journal.interface';
 
 const JournalsHome: React.FC = () => {
