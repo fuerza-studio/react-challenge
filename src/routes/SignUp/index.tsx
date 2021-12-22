@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
+import { yupResolver } from '@hookform/resolvers/yup';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import api from '../../services/api';
@@ -13,6 +14,7 @@ import FormField from '../../components/FormField';
 
 import Logo from '../../assets/logo';
 import { User } from '../../interfaces/user.interface';
+import { signUpValidationSchema } from '../../schemas/signUp';
 
 interface FormValues {
   email?: string;
@@ -25,8 +27,10 @@ const SignUp: React.FC = () => {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
-  } = useForm<FormValues>();
+    formState: { isSubmitting, errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(signUpValidationSchema),
+  });
 
   const onSubmit = async (data: FormValues): Promise<void> => {
     try {
@@ -80,22 +84,30 @@ const SignUp: React.FC = () => {
           </Link>
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', marginBottom: '30px' }}>
+      <Box sx={{ display: 'flex', marginBottom: '15px' }}>
         <FormField
           name="username"
           control={control}
           label="Define a username"
+          error={errors.username || null}
         />
       </Box>
-      <Box sx={{ display: 'flex', marginBottom: '30px' }}>
+      <Box sx={{ display: 'flex', marginBottom: '15px' }}>
         <FormField
           name="password"
           control={control}
           label="Set your password"
+          type="password"
+          error={errors.password || null}
         />
       </Box>
-      <Box sx={{ display: 'flex', marginBottom: '40px' }}>
-        <FormField name="email" control={control} label="Email (optional)" />
+      <Box sx={{ display: 'flex', marginBottom: '25px' }}>
+        <FormField
+          name="email"
+          control={control}
+          label="Email (optional)"
+          error={errors.email || null}
+        />
       </Box>
       <Box
         sx={{
