@@ -20,8 +20,10 @@ const login = (schema: any, req: Request): AuthResponse | Response => {
     return handleErrors(null, 'Password is incorrect');
   }
   const token = generateToken();
+
+  const { password: _password, ...rest } = user.attrs;
   return {
-    user: user.attrs as User,
+    user: rest as User,
     token,
   };
 };
@@ -34,8 +36,10 @@ const signup = (schema: any, req: Request): AuthResponse | Response => {
   }
   const user = schema.users.create(data);
   const token = generateToken();
+
+  const { password: _password, ...rest } = user.attrs;
   return {
-    user: user.attrs as User,
+    user: rest as User,
     token,
   };
 };
