@@ -51,7 +51,7 @@ const LeftBox = styled(Box)<JournalCardProps>(({ journalVariant, theme }) => ({
   height: journalVariant === 'primary' ? '200px' : '330px',
   backgroundColor:
     journalVariant === 'primary' ? theme.palette.secondary.main : 'transparent',
-  boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+  boxShadow: 'inset 3px -3px 2px rgb(0 0 0 / 5%), 4px 0px 4px rgb(0 0 0 / 10%)',
 }));
 
 const Content = styled(Typography)<TypographyProps>(
