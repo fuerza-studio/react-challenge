@@ -68,6 +68,7 @@ const PostsHome: React.FC = () => {
           alignItems: 'center',
           marginBottom: hasPosts ? '30px' : '130px',
         }}
+        onClick={() => navigate('/journals')}
       >
         <Logo />
       </Box>
