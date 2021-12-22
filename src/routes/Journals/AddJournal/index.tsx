@@ -12,6 +12,8 @@ import JournalCard from '../../../components/JournalCard';
 import api from '../../../services/api';
 import Logo from '../../../assets/logo';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addJournalValidationSchema } from '../../../schemas/journals';
 
 interface FormValues {
   title: string;
@@ -25,8 +27,10 @@ const AddJournal: React.FC = () => {
     watch,
     control,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<FormValues>();
+    formState: { isSubmitting, errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(addJournalValidationSchema),
+  });
 
   const currentTitle = watch('title');
   const userData = getUserData();
@@ -91,12 +95,13 @@ const AddJournal: React.FC = () => {
           >
             <JournalCard journalVariant="secondary" content={currentTitle} />
           </Box>
-          <Box sx={{ width: '100%', maxWidth: '320px', marginBottom: '35px' }}>
+          <Box sx={{ width: '100%', maxWidth: '320px', marginBottom: '10px' }}>
             <FormField
               name="title"
               control={control}
               placeholder="Journal title"
               hiddenLabel
+              error={errors.title || null}
             />
           </Box>
           <Box sx={{ marginBottom: '42px' }}>
