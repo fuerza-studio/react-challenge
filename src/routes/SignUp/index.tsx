@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import api from '../../services/api';
 import { useUser } from '../../context/user';
@@ -104,7 +105,17 @@ const SignUp: React.FC = () => {
         }}
       >
         <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-          {isSubmitting ? 'Loading' : 'Create account'}
+          {isSubmitting ? (
+            <CircularProgress
+              sx={{
+                color: '#FFF',
+                width: '23px !important',
+                height: '23px !important',
+              }}
+            />
+          ) : (
+            'Create account'
+          )}
         </Button>
       </Box>
     </Box>

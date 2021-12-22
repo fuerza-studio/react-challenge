@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useUser } from '../../context/user';
 import Link from '../../components/Link';
@@ -77,7 +78,17 @@ const SignIn: React.FC = () => {
           }}
         >
           <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-            {isSubmitting ? 'Loading' : 'Log In'}
+            {isSubmitting ? (
+              <CircularProgress
+                sx={{
+                  color: '#FFF',
+                  width: '23px !important',
+                  height: '23px !important',
+                }}
+              />
+            ) : (
+              'Log in'
+            )}
           </Button>
         </Box>
       </Box>
