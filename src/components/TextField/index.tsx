@@ -1,13 +1,20 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import {
+  Box,
   TextField as MaterialTextField,
   TextFieldProps as MaterialTextFieldProps,
+  Typography,
 } from '@mui/material';
 import { OutlinedInputProps } from '@mui/material/OutlinedInput';
+import { FieldError } from 'react-hook-form';
+
+type TextFieldProps = MaterialTextFieldProps & {
+  hookFormError?: FieldError | null;
+};
 
 const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
-  ({ theme, hiddenLabel }) => ({
+  ({ theme, hiddenLabel, error }) => ({
     minWidth: '100%',
     '& .MuiFormLabel-root': {
       fontSize: 12,
@@ -41,6 +48,9 @@ const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
         'background-color',
         'box-shadow',
       ]),
+      ...(error && {
+        border: '1px solid red',
+      }),
       input: {
         height: '0.417em',
         '&::placeholder': {
@@ -74,17 +84,33 @@ const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
   })
 );
 
-const TextField: React.FC<MaterialTextFieldProps> = ({
+const TextField: React.FC<TextFieldProps> = ({
   label = 'Label here',
   hiddenLabel,
+  hookFormError,
   ...rest
 }) => (
-  <StyledTextField
-    {...(!hiddenLabel && { label })}
-    {...(hiddenLabel && { hiddenLabel: true })}
-    InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
-    {...rest}
-  />
+  <Box
+    sx={{
+      height: '55px',
+      width: '100%',
+      display: 'flex',
+      flexDirection: 'column',
+    }}
+  >
+    <StyledTextField
+      {...(!hiddenLabel && { label })}
+      {...(hiddenLabel && { hiddenLabel: true })}
+      InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
+      error={!!hookFormError}
+      {...rest}
+    />
+    {hookFormError && (
+      <Typography sx={{ fontSize: 10, color: 'red', marginLeft: '2px' }}>
+        {hookFormError.message}
+      </Typography>
+    )}
+  </Box>
 );
 
 export default TextField;

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Controller,
   ControllerProps,
+  FieldError,
   FieldValues,
   Path,
 } from 'react-hook-form';
@@ -13,12 +14,16 @@ interface FormFieldProps<T> extends Partial<ControllerProps<T>> {
   label?: string;
   placeholder?: string;
   name: Path<T>;
+  type?: string;
+  error?: FieldError | null;
 }
 
 const FormField = <T extends FieldValues>({
   name,
+  type,
   control,
   label,
+  error,
   placeholder,
   hiddenLabel,
 }: FormFieldProps<T>) => (
@@ -32,6 +37,8 @@ const FormField = <T extends FieldValues>({
         {...(hiddenLabel && { hiddenLabel: true })}
         onChange={onChange}
         value={value}
+        type={type}
+        hookFormError={error}
       />
     )}
   />

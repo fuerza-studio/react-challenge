@@ -2,6 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import CircularProgress from '@mui/material/CircularProgress';
 
 import { useUser } from '../../context/user';
@@ -10,6 +11,7 @@ import Button from '../../components/Button';
 import FormField from '../../components/FormField';
 
 import Logo from '../../assets/logo';
+import { signInValidationSchema } from '../../schemas/signIn';
 
 interface FormValues {
   username: string;
@@ -18,13 +20,16 @@ interface FormValues {
 
 const SignIn: React.FC = () => {
   const { login } = useUser();
+
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting },
-  } = useForm<FormValues>();
+    formState: { isSubmitting, errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(signInValidationSchema),
+  });
 
-  const onSubmit = async (data: FormValues) => handleLogin(data);
+  const onSubmit = async (data: FormValues): Promise<void> => handleLogin(data);
 
   const handleLogin = async (data: FormValues): Promise<void> => login(data);
 
@@ -53,11 +58,22 @@ const SignIn: React.FC = () => {
             </Link>
           </Box>
         </Box>
-        <Box sx={{ display: 'flex', marginBottom: '30px' }}>
-          <FormField name="username" control={control} label="Your username" />
+        <Box sx={{ display: 'flex', marginBottom: '15px' }}>
+          <FormField
+            name="username"
+            control={control}
+            label="Your username"
+            error={errors.username || null}
+          />
         </Box>
-        <Box sx={{ display: 'flex', marginBottom: '12px' }}>
-          <FormField name="password" control={control} label="Your password" />
+        <Box sx={{ display: 'flex' }}>
+          <FormField
+            name="password"
+            control={control}
+            label="Your password"
+            type="password"
+            error={errors.password || null}
+          />
         </Box>
         <Box
           sx={{
