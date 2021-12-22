@@ -101,6 +101,7 @@ const AddJournal: React.FC = () => {
               control={control}
               placeholder="Journal title"
               hiddenLabel
+              maxLength={30}
               error={errors.title || null}
             />
           </Box>

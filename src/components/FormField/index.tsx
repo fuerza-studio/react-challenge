@@ -16,6 +16,7 @@ interface FormFieldProps<T> extends Partial<ControllerProps<T>> {
   name: Path<T>;
   type?: string;
   error?: FieldError | null;
+  maxLength?: number;
 }
 
 const FormField = <T extends FieldValues>({
@@ -24,6 +25,7 @@ const FormField = <T extends FieldValues>({
   control,
   label,
   error,
+  maxLength,
   placeholder,
   hiddenLabel,
 }: FormFieldProps<T>) => (
@@ -35,6 +37,7 @@ const FormField = <T extends FieldValues>({
         label={label}
         placeholder={placeholder}
         {...(hiddenLabel && { hiddenLabel: true })}
+        {...(maxLength && { maxLength })}
         onChange={onChange}
         value={value}
         type={type}

@@ -21,10 +21,13 @@ interface TypographyProps extends MaterialTypographyProps {
 const RightBox = styled(Box)<JournalCardProps>(
   ({ theme, journalVariant, index = 0 }) => ({
     borderRadius: '0px 16px 16px 0px',
+    padding: '10px',
+    boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    maxWidth: journalVariant === 'primary' ? '160px' : '260px',
     height: journalVariant === 'primary' ? '200px' : '330px',
     backgroundColor:
       journalVariant === 'primary'
@@ -44,7 +47,7 @@ const RightBox = styled(Box)<JournalCardProps>(
 
 const LeftBox = styled(Box)<JournalCardProps>(({ journalVariant, theme }) => ({
   borderRadius: '2px 0px 0px 2px',
-  width: journalVariant === 'primary' ? '12px' : '19px',
+  minWidth: journalVariant === 'primary' ? '12px' : '19px',
   height: journalVariant === 'primary' ? '200px' : '330px',
   backgroundColor:
     journalVariant === 'primary' ? theme.palette.secondary.main : 'transparent',
@@ -74,7 +77,11 @@ const JournalCard: React.FC<JournalCardProps> = ({
   return (
     <Box sx={{ display: 'flex', cursor: 'pointer' }} {...rest}>
       <LeftBox journalVariant={journalVariant} />
-      <RightBox journalVariant={journalVariant} index={index}>
+      <RightBox
+        journalVariant={journalVariant}
+        index={index}
+        sx={{ wordBreak: 'break-all' }}
+      >
         <Content journalVariant={journalVariant} index={index}>
           {content}
         </Content>

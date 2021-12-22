@@ -11,6 +11,7 @@ import { FieldError } from 'react-hook-form';
 
 type TextFieldProps = MaterialTextFieldProps & {
   hookFormError?: FieldError | null;
+  maxLength?: number;
 };
 
 const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
@@ -88,6 +89,7 @@ const TextField: React.FC<TextFieldProps> = ({
   label = 'Label here',
   hiddenLabel,
   hookFormError,
+  maxLength,
   ...rest
 }) => (
   <Box
@@ -101,7 +103,14 @@ const TextField: React.FC<TextFieldProps> = ({
     <StyledTextField
       {...(!hiddenLabel && { label })}
       {...(hiddenLabel && { hiddenLabel: true })}
-      InputProps={{ disableUnderline: true } as Partial<OutlinedInputProps>}
+      InputProps={
+        {
+          disableUnderline: true,
+        } as Partial<OutlinedInputProps>
+      }
+      inputProps={{
+        ...(maxLength && { maxLength: maxLength }),
+      }}
       error={!!hookFormError}
       {...rest}
     />
