@@ -48,6 +48,17 @@ const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
           opacity: 1,
         },
       },
+      // fix white box on input when hiddenLabel is false
+      ...(!hiddenLabel && {
+        input: {
+          padding: '16px 10px',
+          paddingTop: '22px',
+          boxSizing: 'border-box',
+        },
+        span: {
+          display: 'none',
+        },
+      }),
       '&:hover': {
         backgroundColor: hiddenLabel ? 'rgba(255, 255, 255, 0.42)' : '#FFFFFF',
         border: '1px solid #80ccff',
@@ -55,6 +66,9 @@ const StyledTextField = styled(MaterialTextField)<MaterialTextFieldProps>(
       '&.Mui-focused': {
         backgroundColor: hiddenLabel ? 'rgba(255, 255, 255, 0.42)' : '#FFFFFF',
         border: '1px solid #80ccff',
+        fieldset: {
+          border: 'none',
+        },
       },
     },
   })
