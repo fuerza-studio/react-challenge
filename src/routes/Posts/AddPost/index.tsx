@@ -10,6 +10,8 @@ import Button from '../../../components/Button';
 import FormField from '../../../components/FormField';
 
 import Logo from '../../../assets/logo';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addPostValidationSchema } from '../../../schemas/posts';
 
 const journalTitle = 'HTML';
 
@@ -21,11 +23,14 @@ interface FormValues {
 const AddPost: React.FC = () => {
   const navigate = useNavigate();
   const { journalId } = useParams();
+
   const {
     control,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<FormValues>();
+    formState: { isSubmitting, errors },
+  } = useForm<FormValues>({
+    resolver: yupResolver(addPostValidationSchema),
+  });
 
   const onSubmit = async (data: FormValues) => {
     try {
@@ -85,7 +90,7 @@ const AddPost: React.FC = () => {
           sx={{
             width: '100%',
             maxWidth: '500px',
-            marginBottom: '28px',
+            marginBottom: '13px',
           }}
         >
           <FormField
@@ -93,14 +98,16 @@ const AddPost: React.FC = () => {
             control={control}
             placeholder="Title"
             hiddenLabel
+            error={errors.title || null}
           />
         </Box>
-        <Box sx={{ width: '100%', maxWidth: '500px', marginBottom: '35px' }}>
+        <Box sx={{ width: '100%', maxWidth: '500px', marginBottom: '10px' }}>
           <FormField
             name="content"
             control={control}
             placeholder="Write your note"
             hiddenLabel
+            error={errors.content || null}
           />
         </Box>
         <Box>
