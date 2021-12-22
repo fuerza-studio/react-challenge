@@ -72,6 +72,18 @@ export const getJournals = (
   }
 };
 
+export const getJournalDataByJournalId = (
+  schema: any,
+  req: Request
+): Journal | Response => {
+  try {
+    const journal = schema.journals.find(req.params.id);
+    return journal;
+  } catch (error) {
+    return handleErrors(error, 'Journal not found.');
+  }
+};
+
 export const getEntries = (
   schema: any,
   req: Request
