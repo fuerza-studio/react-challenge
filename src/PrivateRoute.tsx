@@ -9,9 +9,10 @@ interface PrivateRouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: RouteComponent,
 }) => {
-  const token = localStorage.getItem('token');
+  const userData = localStorage.getItem('userData');
+  const parsedData = userData ? JSON.parse(userData) : '';
 
-  if (token) return <RouteComponent />;
+  if (parsedData) return <RouteComponent />;
 
   return <Navigate to="/signin" />;
 };

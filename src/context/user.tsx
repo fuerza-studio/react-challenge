@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,9 +9,8 @@ interface Credentials {
   username: string;
   password: string;
 }
-
 interface UserContextData {
-  user: string | null;
+  getUserData: () => any;
   login(credentials: Credentials): Promise<void>;
 }
 
@@ -19,7 +18,6 @@ const UserContext = createContext<UserContextData>({} as UserContextData);
 
 const UserProvider: React.FC = (props) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<string | null>(null);
 
   const login = async (data: Credentials): Promise<void> => {
     try {
@@ -30,8 +28,12 @@ const UserProvider: React.FC = (props) => {
       if (!response) {
         throw new Error();
       }
-      localStorage.setItem('token', response.token);
-      setUser(response.user.email || 'Not existing email');
+
+      const { password: _password, ...userData } = response.user;
+      localStorage.setItem(
+        'userData',
+        JSON.stringify({ token: response.token, ...userData })
+      );
       navigate('/journals');
     } catch (err) {
       toast.error('Wrong credentials!', {
@@ -46,10 +48,15 @@ const UserProvider: React.FC = (props) => {
     }
   };
 
+  const getUserData = () => {
+    const userData = localStorage.getItem('userData');
+    return userData && JSON.parse(userData);
+  };
+
   return (
     <UserContext.Provider
       value={{
-        user,
+        getUserData,
         login,
       }}
       {...props}

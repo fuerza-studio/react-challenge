@@ -1,27 +1,62 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Add } from '@mui/icons-material';
 import { Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+import api from '../../../services/api';
+import { useUser } from '../../../context/user';
 import Button from '../../../components/Button';
 import Link from '../../../components/Link';
 import JournalCard from '../../../components/JournalCard';
 
 import Logo from '../../../assets/logo';
 import JournalsEmptyImg from '../../../assets/journals-empty-img';
+import { toast } from 'react-toastify';
+import { Journal } from '../../../interfaces/journal.interface';
 
 const JournalsHome: React.FC = () => {
   const navigate = useNavigate();
-  const [journals] = useState([
-    { id: '1', content: 'Journal 1' },
-    { id: '2', content: 'Journal 2' },
-    { id: '3', content: 'Journal 3' },
-    { id: '4', content: 'Journal 4' },
-    { id: '5', content: 'Journal 5' },
-    { id: '6', content: 'Journal 6' },
-  ]);
+  const { getUserData } = useUser();
 
+  const [journals, setJournals] = useState<Journal[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const hasJournals = journals.length;
+
+  const userData = getUserData();
+  const userId = userData?.id || '';
+
+  useEffect(() => {
+    if (userId) {
+      const handleGetJournals = async () => {
+        try {
+          const { journals }: { journals: Journal[] } = await api.get(
+            `/journals/${userId}`
+          );
+
+          if (!journals) {
+            throw new Error();
+          }
+
+          setJournals(journals);
+        } catch (err) {
+          toast.error('Please, try again later!', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      handleGetJournals();
+    }
+  }, [userId]);
+
+  if (isLoading) return <p>loading...</p>;
 
   return (
     <Box component="section">
@@ -77,7 +112,7 @@ const JournalsHome: React.FC = () => {
                 onClick={() => navigate(`/journals/${item.id}/posts`)}
               >
                 <JournalCard
-                  content={item.content}
+                  content={item.title}
                   index={index}
                   journalVariant="primary"
                 />
