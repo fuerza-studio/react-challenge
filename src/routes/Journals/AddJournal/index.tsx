@@ -64,10 +64,12 @@ const AddJournal: React.FC = () => {
         <Box
           sx={{
             display: 'flex',
+            cursor: 'pointer',
             justifyContent: 'flex-start',
             alignItems: 'center',
             marginBottom: '115px',
           }}
+          onClick={() => navigate('/journals')}
         >
           <Logo />
         </Box>
