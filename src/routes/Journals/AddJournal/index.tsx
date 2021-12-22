@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import { useUser } from '../../../context/user';
 import Button from '../../../components/Button';
@@ -100,7 +101,17 @@ const AddJournal: React.FC = () => {
           </Box>
           <Box sx={{ marginBottom: '42px' }}>
             <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-              {isSubmitting ? 'Loading' : 'Save journal'}
+              {isSubmitting ? (
+                <CircularProgress
+                  sx={{
+                    color: '#FFF',
+                    width: '23px !important',
+                    height: '23px !important',
+                  }}
+                />
+              ) : (
+                'Save journal'
+              )}
             </Button>
           </Box>
         </Box>

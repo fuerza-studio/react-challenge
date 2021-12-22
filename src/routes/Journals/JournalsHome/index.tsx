@@ -3,6 +3,7 @@ import { Add } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 import { Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import api from '../../../services/api';
 import { useUser } from '../../../context/user';
@@ -56,8 +57,6 @@ const JournalsHome: React.FC = () => {
     }
   }, [userId]);
 
-  if (isLoading) return <p>loading...</p>;
-
   return (
     <Box component="section">
       <Box
@@ -79,48 +78,60 @@ const JournalsHome: React.FC = () => {
           </Button>
         )}
       </Box>
-      <Box>
-        {!hasJournals ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box sx={{ marginBottom: '80px' }}>
-              <JournalsEmptyImg />
+      {isLoading ? (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box>
+          {!hasJournals ? (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Box sx={{ marginBottom: '80px' }}>
+                <JournalsEmptyImg />
+              </Box>
+              <Box>
+                <Link href="create">Create a journal</Link>
+              </Box>
             </Box>
-            <Box>
-              <Link href="create">Create a journal</Link>
-            </Box>
-          </Box>
-        ) : (
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-          >
-            {journals.map((item, index) => (
-              <Grid
-                sx={{ cursor: 'pointer' }}
-                item
-                xs={2}
-                sm={4}
-                md={3}
-                key={index}
-                onClick={() => navigate(`/journals/${item.id}/posts`)}
-              >
-                <JournalCard
-                  content={item.title}
-                  index={index}
-                  journalVariant="primary"
-                />
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      </Box>
+          ) : (
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              {journals.map((item, index) => (
+                <Grid
+                  sx={{ cursor: 'pointer' }}
+                  item
+                  xs={2}
+                  sm={4}
+                  md={3}
+                  key={index}
+                  onClick={() => navigate(`/journals/${item.id}/posts`)}
+                >
+                  <JournalCard
+                    content={item.title}
+                    index={index}
+                    journalVariant="primary"
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
