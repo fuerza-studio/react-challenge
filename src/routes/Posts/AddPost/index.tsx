@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
-import { Box, Typography } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import api from '../../../services/api';
@@ -105,7 +105,17 @@ const AddPost: React.FC = () => {
         </Box>
         <Box>
           <Button variant="contained" onClick={handleSubmit(onSubmit)}>
-            {isSubmitting ? 'Loading' : 'Save note'}
+            {isSubmitting ? (
+              <CircularProgress
+                sx={{
+                  color: '#FFF',
+                  width: '23px !important',
+                  height: '23px !important',
+                }}
+              />
+            ) : (
+              'Save note'
+            )}
           </Button>
         </Box>
       </Box>

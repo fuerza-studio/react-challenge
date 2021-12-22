@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Add } from '@mui/icons-material';
-import { Box, Typography, Grid } from '@mui/material';
+import { Box, Typography, Grid, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { useNavigate, useParams } from 'react-router-dom';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -59,8 +59,6 @@ const PostsHome: React.FC = () => {
     }
   }, [journalId]);
 
-  if (isLoading) return <p>loading...</p>;
-
   return (
     <Box component="section">
       <Box
@@ -99,59 +97,71 @@ const PostsHome: React.FC = () => {
           </Button>
         </Box>
       )}
-      <Box>
-        {!hasPosts ? (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Box sx={{ marginBottom: '66px' }}>
-              <Typography
-                sx={{
-                  fontFamily: 'Abhaya Libre',
-                  fontSize: 24,
-                  fontWeight: 700,
-                }}
-              >
-                {journalTitle}
-              </Typography>
+      {isLoading ? (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Box>
+          {!hasPosts ? (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <Box sx={{ marginBottom: '66px' }}>
+                <Typography
+                  sx={{
+                    fontFamily: 'Abhaya Libre',
+                    fontSize: 24,
+                    fontWeight: 700,
+                  }}
+                >
+                  {journalTitle}
+                </Typography>
+              </Box>
+              <Box sx={{ marginBottom: '80px' }}>
+                <JournalsEmptyImg />
+              </Box>
+              <Box>
+                <Link href={`/journals/${journalId}/posts/create`}>
+                  Create a note
+                </Link>
+              </Box>
             </Box>
-            <Box sx={{ marginBottom: '80px' }}>
-              <JournalsEmptyImg />
-            </Box>
-            <Box>
-              <Link href={`/journals/${journalId}/posts/create`}>
-                Create a note
-              </Link>
-            </Box>
-          </Box>
-        ) : (
-          <Grid
-            container
-            spacing={{ xs: 2, md: 3 }}
-            columns={{ xs: 4, sm: 8, md: 12 }}
-          >
-            {posts.map((item, index) => (
-              <Grid
-                sx={{ cursor: 'pointer' }}
-                item
-                xs={2}
-                sm={4}
-                md={3}
-                key={index}
-                onClick={() =>
-                  navigate(`/jornals/${journalId}/posts/${item.id}`)
-                }
-              >
-                <PostCard title={item.title} />
-              </Grid>
-            ))}
-          </Grid>
-        )}
-      </Box>
+          ) : (
+            <Grid
+              container
+              spacing={{ xs: 2, md: 3 }}
+              columns={{ xs: 4, sm: 8, md: 12 }}
+            >
+              {posts.map((item, index) => (
+                <Grid
+                  sx={{ cursor: 'pointer' }}
+                  item
+                  xs={2}
+                  sm={4}
+                  md={3}
+                  key={index}
+                  onClick={() =>
+                    navigate(`/jornals/${journalId}/posts/${item.id}`)
+                  }
+                >
+                  <PostCard title={item.title} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
