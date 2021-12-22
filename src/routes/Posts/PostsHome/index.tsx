@@ -152,7 +152,7 @@ const PostsHome: React.FC = () => {
                   md={3}
                   key={index}
                   onClick={() =>
-                    navigate(`/jornals/${journalId}/posts/${item.id}`)
+                    navigate(`/journals/${journalId}/posts/${item.id}`)
                   }
                 >
                   <PostCard title={item.title} />

@@ -96,6 +96,27 @@ export const getEntries = (
   }
 };
 
+export const getEntrieById = (
+  schema: any,
+  req: Request
+): { entrie: Entry | null } | Response => {
+  try {
+    const journal = schema.journals.find(req.params.journalId);
+
+    if (journal) {
+      return {
+        entrie: journal.entry.models.find(
+          (item: Entry) => item.id === req.params.postId
+        ),
+      };
+    }
+
+    return { entrie: null };
+  } catch (error) {
+    return handleErrors(error, 'Failed to get entrie.');
+  }
+};
+
 export const updateJournal = (
   schema: any,
   req: Request

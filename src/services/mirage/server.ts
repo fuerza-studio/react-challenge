@@ -46,6 +46,7 @@ export const setupServer = (env?: string): Server => {
 
       this.get('/journals/entries/:id', journal.getEntries);
       this.get('/journals/:id', journal.getJournals);
+      this.get('/journals/:journalId/entries/:postId', journal.getEntrieById);
       this.get('/journals/data/:id', journal.getJournalDataByJournalId);
 
       this.post('/auth/login', user.login);

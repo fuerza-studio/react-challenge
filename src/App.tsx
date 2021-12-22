@@ -22,6 +22,7 @@ import AddPost from './routes/Posts/AddPost';
 import theme from './theme';
 
 import ScreenBgImg from './assets/screen-bg-img.png';
+import Post from './routes/Posts/Post';
 
 const Background = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.primary.light,
@@ -59,8 +60,10 @@ const App = () => {
                     path="create"
                     element={<PrivateRoute component={AddPost} />}
                   />
-                  {/* <Route path=":postId"> */}
-                  {/* </Route> */}
+                  <Route
+                    path=":postId"
+                    element={<PrivateRoute component={Post} />}
+                  />
                 </Route>
               </Route>
             </Route>
