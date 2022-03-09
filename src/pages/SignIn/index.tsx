@@ -4,15 +4,17 @@ import logo from '../../assets/images/logo.svg';
 export const SignIn = () => {
     
     return(
-        <section>
-            <img src={logo} alt="Logo" className="section-logo" />
-            <h1>Sign In</h1>
-            <span>Sign Up</span>
-            <form>
-                <input type="text" placeholder="Your username" />
-                <input type="password" placeholder="Your username" />
-                <span>Forgot password?</span>
-                <button>Log in</button>
+        <section className="signIn">
+            <img className="signIn-logo" src={ logo } alt="Logo" />
+            <div className="signIn-header">
+                <h1 className="header-title">Sign In</h1>
+                <a className="header-link" href="/" >Sign Up</a>
+            </div>
+            <form className="signIn-form">
+                <input className="form-input" type="text" placeholder="Your username" />
+                <input className="form-input" type="password" placeholder="Your password" />
+                <a className="form-link" href="/">Forgot password?</a>
+                <div className="form-button">Log in</div>
             </form>
         </section>
     );

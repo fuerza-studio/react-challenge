@@ -1,5 +1,10 @@
 /*|---------------|App Color Schema|---------------*/
 $BACKGROUND-COLOR-BASE: #F8E5D6;
+$PRIMARY: #834825;
+$SECONDARY: #804627;
+$BLACK: #000000;
+$WHITE: #FFFFFF;
+$PLACEHOLDER-FOCUS:#736D6B;
 
 /*|---------------|BREAKPOINTS|---------------*/
 $BREAKPOINT-MOBILE-M: "(min-width: 320px)";
@@ -9,7 +14,6 @@ $BREAKPOINT-DESK: "(min-width: 1280px)";
 
 /*|---------------|MIXINS|---------------*/
 @mixin size-main {
-    position: relative;
     height: 812px;
     padding: 2rem;
     border-radius: 0px;
