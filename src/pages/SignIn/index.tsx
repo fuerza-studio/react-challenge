@@ -1,5 +1,7 @@
 import React from "react";
 import logo from '../../assets/images/logo.svg';
+import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
 
 export const SignIn = () => {
     
@@ -11,10 +13,10 @@ export const SignIn = () => {
                 <a className="header-link" href="/" >Sign Up</a>
             </div>
             <form className="signIn-form">
-                <input className="form-input" type="text" placeholder="Your username" />
-                <input className="form-input" type="password" placeholder="Your password" />
+                <Input type="text" placeholder="Your username" />
+                <Input type="password" placeholder="Your password" />
                 <a className="form-link" href="/">Forgot password?</a>
-                <div className="form-button">Log in</div>
+                <Button title="Log in" />
             </form>
         </section>
     );
