@@ -12,11 +12,7 @@ body {
   overflow-x: hidden;
 }
 
-body {
-    background: url('../images/image-base.svg') no-repeat left $BACKGROUND-COLOR-BASE;
-}
-
 main {
     @include size-main;
-    
+    background: url('../images/image-base.svg') no-repeat left $BACKGROUND-COLOR-BASE;
 }

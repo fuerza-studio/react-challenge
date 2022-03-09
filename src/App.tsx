@@ -4,13 +4,15 @@ import { SignIn } from "./pages/SignIn/SignIn";
 
 function App(){
     return (
-        <Router>
-            <Switch>
-                <Route exact path="/">
-                    <SignIn />
-                </Route>
-            </Switch>
-        </Router>
+        <main>
+            <Router>
+                <Switch>
+                    <Route exact path="/">
+                        <SignIn />
+                    </Route>
+                </Switch>
+            </Router>
+        </main>
     );
 }
 
