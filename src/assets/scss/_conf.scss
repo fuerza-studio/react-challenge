@@ -1,0 +1,16 @@
+/*|---------------|App Color Schema|---------------*/
+$BACKGROUND-COLOR-BASE: #F8E5D6;
+
+/*|---------------|BREAKPOINTS|---------------*/
+$BREAKPOINT-MOBILE-M: "(min-width: 320px)";
+$BREAKPOINT-MOBILE-L: "(min-width: 375px)";
+$BREAKPOINT-TABLET: "(min-width: 425px)";
+$BREAKPOINT-DESK: "(min-width: 1280px)";
+
+/*|---------------|MIXINS|---------------*/
+@mixin size-main {
+    position: relative;
+    height: 812px;
+    padding: 2rem;
+    border-radius: 0px;
+}
